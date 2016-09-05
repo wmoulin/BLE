@@ -1,0 +1,45 @@
+.driver {
+  display: inline-flex;
+  flex-direction: column;
+  height: 300px;
+  width: 300px;
+  border: 1px solid;
+}
+
+.rows {
+  display: inline-flex;
+  flex: 1 33%;
+  height: 33%;
+  width: 100%;
+}
+
+.cols {
+  flex: 1;
+  height: 100%;
+  width: 33%;
+}
+
+.center {
+  border-radius:50px;
+  background-color: black;
+}
+
+
+.cols img {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  content: url("../images/up.png");
+}
+
+#left img {
+  -webkit-transform: rotate(-90deg);
+}
+
+#right img {
+  -webkit-transform: rotate(90deg);
+}
+
+#down img {
+  -webkit-transform: rotate(180deg);
+}
