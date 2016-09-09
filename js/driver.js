@@ -10,9 +10,34 @@ function connect() {
   console.log("connexion");
   navigator.bluetooth.requestDevice({
     filters: [{
-      name: 'leo'
+      name: 'LEO'
     }]
   })
-  .then(device => { console.log("connect"); })
+  .then(device => {
+    console.log("try connect");
+    device.addEventListener('gattserverdisconnected', onDisconnected);
+    device.gatt.connect();})
+  .then(server => { console.log("connect"); })
+  .then(server => server.getPrimaryService('led'))
+  .then(service => service.getCharacteristic('color'))
+  .then(characteristic => {
+    // Writing 1 is the signal to reset energy expended.
+    var newColor = new Uint8Array([1]);
+    return characteristic.writeValue(newColor);
+  })
+  .then(_ => {
+    console.log('Energy expended has been reset.');
+  })
   .catch(error => { console.log(error); });
+}
+
+
+function disconnect() {
+  console.log("deconnexion");
+  .catch(error => { console.log(error); });
+}
+
+function onDisconnected(event) {
+  let device = event.target;
+  console.log('Device ' + device.name + ' is disconnected.');
 }
