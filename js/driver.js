@@ -48,3 +48,13 @@ function onDisconnected(event) {
   let device = event.target;
   console.log('Device ' + device.name + ' is disconnected.');
 }
+
+function colorChange(value) {
+  var newColor = hexValue(document.getElementById("red").value) + hexValue(document.getElementById("green").value) + hexValue(document.getElementById("blue").value);
+  console.log('newColor :', newColor);
+  document.getElementById("apercu").style.backgroundColor = "#" + newColor;
+}
+
+function hexValue(value) {
+  return ("0"+(Number(value).toString(16))).slice(-2).toUpperCase();
+}
