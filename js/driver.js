@@ -15,7 +15,7 @@ function connect() {
     filters: [{
       name: 'LEO'
     }],
-    "optionalServices": ["0000baba-0000-1000-8000-00805f9b34fb"]
+    "optionalServices": [parseInt("0xBABA")]
   })
   .then(device => {
     console.log("try connect");
@@ -23,8 +23,8 @@ function connect() {
     device.addEventListener('gattserverdisconnected', onDisconnected);
     return device.gatt.connect();
   })
-  .then(server => server.getPrimaryService("0000baba-0000-1000-8000-00805f9b34fb"))
-  .then(service => service.getCharacteristic("0000aaaa-0000-1000-8000-00805f9b34fb"))
+  .then(server => server.getPrimaryService(parseInt("0xBABA"))
+  .then(service => service.getCharacteristic(parseInt("0xAAAA"))
   .then(characteristic => {
     let decoder = new TextDecoder('utf-8');
 	  return characteristic.readValue().then(value => {
