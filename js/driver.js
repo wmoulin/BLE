@@ -58,7 +58,7 @@ function connect() {
   })
   .then(server => server.getPrimaryService(parseInt("0xBABA")))
   .then(service => service.getCharacteristic(parseInt("0xAAAA")))
-  .then(characteristic => characteristic.writeValue(buf));
+  .then(characteristic => {characteristic.writeValue(buf)
 
   /*.then(characteristic => {
     let decoder = new TextDecoder('utf-8');
