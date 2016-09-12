@@ -23,8 +23,8 @@ function connect() {
     device.addEventListener('gattserverdisconnected', onDisconnected);
     return device.gatt.connect();
   })
-  .then(server => server.getPrimaryService(parseInt("0xBABA"))
-  .then(service => service.getCharacteristic(parseInt("0xAAAA"))
+  .then(server => server.getPrimaryService(parseInt("0xBABA")))
+  .then(service => service.getCharacteristic(parseInt("0xAAAA")))
   .then(characteristic => {
     let decoder = new TextDecoder('utf-8');
 	  return characteristic.readValue().then(value => {
