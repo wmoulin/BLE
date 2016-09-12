@@ -58,14 +58,14 @@ function connect() {
   })
   .then(server => server.getPrimaryService(parseInt("0xBABA")))
   .then(service => service.getCharacteristic(parseInt("0xAAAA")))
-  .then(characteristic => {characteristic.writeValue(buf)
+  /*.then(characteristic => {characteristic.writeValue(buf)*/
 
-  /*.then(characteristic => {
+  .then(characteristic => {
     let decoder = new TextDecoder('utf-8');
     return characteristic.readValue().then(value => {
       console.log("characteristic value :", value);
 	    console.log("characteristic value :", decoder.decode(value));
-	  });*/
+	  });
 
     // Writing 1 is the signal to reset energy expended.
     //var newColor = new Uint8Array([1]);
