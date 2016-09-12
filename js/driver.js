@@ -43,7 +43,7 @@ function connect() {
     colorCharacteristic = characteristic;
     // Notification start
     /*return characteristic.startNotifications().then(_ => {
-      characteristic.addEventListener('characteristicvaluechanged', callback);
+      characteristic.addEventListener('characteristicvaluechanged', characteristicValueChanged);
     });*/
     let decoder = new TextDecoder('utf-8');
     return characteristic.readValue().then(value => {
@@ -67,7 +67,7 @@ function disconnect() {
   if (bluetoothDevice.gatt.connected) {
     console.log('Deconnexion');
     //colorCharacteristic.stopNotifications().then(_ => {
-      colorCharacteristic.removeEventListener('characteristicvaluechanged', callback);
+      colorCharacteristic.removeEventListener('characteristicvaluechanged', characteristicValueChanged);
       bluetoothDevice.gatt.disconnect();
       document.getElementById("connectBtn").onclick=function(){connect()};
     //});
@@ -139,3 +139,7 @@ function inverseByte(byteArray) {
   }
   return buf;
 }
+
+function characteristicValueChanged(e) {
+  console.log("characteristicvaluechanged :", characteristicvaluechanged);
+};
