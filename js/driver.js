@@ -129,7 +129,7 @@ function inverseByte(byteArray) {
   var buf = new ArrayBuffer(byteArray.length);
   var bufView = new Uint16Array(buf);
   // Gestion de l'inversion par paire des bytes
-  for (int i = 0; i < byteArray.length; i+2) {
+  for (let i = 0; i < byteArray.length; i+2) {
     bufView[0] = byteArray[i+1] << 8 | byteArray[i];
   }
   return buf;
