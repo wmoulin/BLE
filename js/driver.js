@@ -60,8 +60,8 @@ function connect() {
   .then(service => service.getCharacteristic(parseInt("0xAAAA")))
   .then(characteristic => {
     let decoder = new TextDecoder('utf-8');
-    console.log("characteristic value :", value);
-	  return characteristic.readValue().then(value => {
+    return characteristic.readValue().then(value => {
+      console.log("characteristic value :", value);
 	    console.log("characteristic value :", decoder.decode(value));
 	  });
 
