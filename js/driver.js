@@ -66,8 +66,8 @@ function disconnect() {
 
   if (bluetoothDevice.gatt.connected) {
     console.log('Deconnexion');
-    //colorCharacteristic.stopNotifications().then(_ => {
-      colorCharacteristic.removeEventListener('characteristicvaluechanged', characteristicValueChanged);
+    //colorCharacteristic.stopNotifications().then(_ => {colorCharacteristic
+       if(colorCharacteristic) colorCharacteristic.removeEventListener('characteristicvaluechanged', characteristicValueChanged);
       bluetoothDevice.gatt.disconnect();
       document.getElementById("connectBtn").onclick=function(){connect()};
     //});
@@ -94,7 +94,7 @@ function hexValue(value) {
 }
 
 function sendColor() {
-  colorCharacteristic.writeValue(inverseByte(byteTest))
+  colorCharacteristic.writeValue(new Uint8Array([byteTest])
   .then( () => {
     console.log('New color send.');
   })
