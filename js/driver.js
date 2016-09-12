@@ -18,16 +18,17 @@ function connect() {
     device.addEventListener('gattserverdisconnected', onDisconnected);
     device.gatt.connect();})
   .then(server => { console.log("connect"); })
-  .then(server => server.getPrimaryService('led'))
-  .then(service => service.getCharacteristic('color'))
+  .then(server => server.getPrimaryService(parseInt("0xBABA")))
+  .then(service => service.getCharacteristic(parseInt("0xaaaa")))
   .then(characteristic => {
+	  console.log("characteristic :", characteristic);
     // Writing 1 is the signal to reset energy expended.
-    var newColor = new Uint8Array([1]);
-    return characteristic.writeValue(newColor);
+    //var newColor = new Uint8Array([1]);
+    //return characteristic.writeValue(newColor);
   })
-  .then(_ => {
+  /*.then(_ => {
     console.log('Energy expended has been reset.');
-  })
+  })*/
   .catch(error => { console.log(error); });
 }
 
