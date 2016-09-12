@@ -14,7 +14,7 @@ function connect() {
   navigator.bluetooth.requestDevice({
     filters: [{
       name: 'LEO',
-	    services: ["0xBABA"]
+	    services: [parseInt("0xBABA")]
     }]
   })
   .then(device => {
@@ -76,7 +76,7 @@ function sendColor() {
   navigator.bluetooth.requestDevice({
     filters: [{
       name: 'LEO',
-	  services: [parseInt("0xBABA")]
+	    services: [parseInt("0xBABA")]
     }]
   })
   .then(device => {
