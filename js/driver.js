@@ -46,11 +46,11 @@ function disconnect() {
   if (!bluetoothDevice) {
     return;
   }
-  log('Deconnexion');
+  console.log('Deconnexion');
   if (bluetoothDevice.gatt.connected) {
     bluetoothDevice.gatt.disconnect();
   } else {
-    log('> Bluetooth Device is already disconnected');
+    console.log('Bluetooth Device is already disconnected');
   }
 }
 
