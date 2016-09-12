@@ -64,3 +64,35 @@ function colorChange(value) {
 function hexValue(value) {
   return ("0"+(Number(value).toString(16))).slice(-2).toUpperCase();
 }
+
+function sendColor() {
+  console.log("connexion");
+  navigator.bluetooth.requestDevice({
+    filters: [{
+      name: 'LEO',
+	  services: ["0xBABA"]
+    }]
+  })
+  .then(device => {
+    console.log("try connect");
+    device.addEventListener('gattserverdisconnected', onDisconnected);
+    device.gatt.connect();})
+  .then(server => { console.log("connect"); })
+  .then(server => server.getPrimaryService(parseInt("0xBABA")))
+  .then(service => service.getCharacteristic(parseInt("0xaaaa")))
+  .then(characteristic => {
+    let decoder = new TextDecoder('utf-8');
+	return characteristic.readValue().then(value => {
+	  console.log("characteristic value :", decoder.decode(value));
+	});
+	  
+    // Writing 1 is the signal to reset energy expended.
+    //var newColor = new Uint8Array([1]);
+    //return characteristic.writeValue(newColor);
+  })
+  /*.then(_ => {
+    console.log('Energy expended has been reset.');
+  })*/
+  .catch(error => { console.log(error); });
+
+}
