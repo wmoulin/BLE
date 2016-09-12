@@ -68,7 +68,7 @@ function connect() {
     // Writing 1 is the signal to reset energy expended.
     //var newColor = new Uint8Array([1]);
     //return characteristic.writeValue(newColor);
-  }).then(_ => {document.getElementById("connectBtn").click=function(){disconnect()};})
+  }).then(_ => {document.getElementById("connectBtn").onclick=function(){disconnect()};})
   /*.then(_ => {
     console.log('Energy expended has been reset.');
   })*/
@@ -84,7 +84,7 @@ function disconnect() {
   if (bluetoothDevice.gatt.connected) {
     console.log('Deconnexion');
     bluetoothDevice.gatt.disconnect();
-    document.getElementById("connectBtn").click=function(){connect()};
+    document.getElementById("connectBtn").onclick=function(){connect()};
   } else {
     console.log('Bluetooth Device is already disconnected');
   }
