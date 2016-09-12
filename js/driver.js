@@ -14,7 +14,7 @@ function connect() {
   navigator.bluetooth.requestDevice({
     filters: [{
       name: 'LEO',
-	    services: [parseInt("0xBABA")]
+	    services: ["0000baba-0000-1000-8000-00805f9b34fb"]
     }]
   })
   .then(device => {
@@ -23,8 +23,8 @@ function connect() {
     device.addEventListener('gattserverdisconnected', onDisconnected);
     return device.gatt.connect();
   })
-  .then(server => server.getPrimaryService(parseInt("0xBABA")))
-  .then(service => service.getCharacteristic(parseInt("0xAAAA")))
+  .then(server => server.getPrimaryService("0000baba-0000-1000-8000-00805f9b34fb"))
+  .then(service => service.getCharacteristic("0000aaaa-0000-1000-8000-00805f9b34fb"))
   .then(characteristic => {
     let decoder = new TextDecoder('utf-8');
 	  return characteristic.readValue().then(value => {
