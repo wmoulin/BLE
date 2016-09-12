@@ -107,7 +107,7 @@ function sendColor() {
 function initServiceColor() {
   console.log("connexion");
   isDeviceinit();
-  device.gatt.connect();
+  device.gatt.connect()
   .then(server => server.getPrimaryService(parseInt("0xBABA")))
   .then(service => service.getCharacteristic(parseInt("0xaaaa")))
   .then(characteristic => {
