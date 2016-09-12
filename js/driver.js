@@ -89,7 +89,7 @@ function hexValue(value) {
 }
 
 function sendColor() {
-  characteristic.writeValue(inverseByte(byteTest))
+  colorCharacteristic.writeValue(inverseByte(byteTest))
   .then( () => {
     console.log('New color send.');
   })
