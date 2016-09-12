@@ -94,7 +94,7 @@ function hexValue(value) {
 }
 
 function sendColor() {
-  colorCharacteristic.writeValue("new Uint8Array([byteTest])")
+  colorCharacteristic.writeValue(new Uint8Array([1]))
   .then( () => {
     console.log('New color send.');
   })
