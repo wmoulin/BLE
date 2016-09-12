@@ -13,9 +13,9 @@ function connect() {
   console.log("connexion");
   navigator.bluetooth.requestDevice({
     filters: [{
-      name: 'LEO',
-	    services: ["0000baba-0000-1000-8000-00805f9b34fb"]
-    }]
+      name: 'LEO'
+    ],
+    "optionalServices": ["0000baba-0000-1000-8000-00805f9b34fb"]
   })
   .then(device => {
     console.log("try connect");
