@@ -19,9 +19,10 @@ function connect() {
   })
   .then(device => {
     console.log("try connect");
-	bluetoothDevice = device;
+	  bluetoothDevice = device;
     device.addEventListener('gattserverdisconnected', onDisconnected);
-    device.gatt.connect();})
+    return device.gatt.connect();
+  })
   .then(server => server.getPrimaryService(parseInt("0xBABA")))
   .then(service => service.getCharacteristic(parseInt("0xAAAA")))
   .then(characteristic => {
