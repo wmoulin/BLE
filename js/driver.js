@@ -8,11 +8,10 @@ function onTouchStart() {
 
 function connect() {
   console.log("connexion");
-  navigator.bluetooth.requestDevice({
-    filters: [{
+  navigator.bluetooth.requestDevice([{
       name: 'LEO'
     }]
-  })
+  )
   .then(device => {
     console.log("try connect");
     device.addEventListener('gattserverdisconnected', onDisconnected);
