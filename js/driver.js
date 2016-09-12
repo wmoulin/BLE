@@ -14,7 +14,7 @@ function connect() {
   navigator.bluetooth.requestDevice({
     filters: [{
       name: 'LEO',
-	  services: ["0xBABA"]
+	    services: ["0xBABA"]
     }]
   })
   .then(device => {
@@ -30,7 +30,7 @@ function connect() {
 	return characteristic.readValue().then(value => {
 	  console.log("characteristic value :", decoder.decode(value));
 	});
-	  
+
     // Writing 1 is the signal to reset energy expended.
     //var newColor = new Uint8Array([1]);
     //return characteristic.writeValue(newColor);
@@ -92,7 +92,7 @@ function sendColor() {
 	return characteristic.readValue().then(value => {
 	  console.log("characteristic value :", decoder.decode(value));
 	});
-	  
+
     // Writing 1 is the signal to reset energy expended.
     //var newColor = new Uint8Array([1]);
     //return characteristic.writeValue(newColor);
