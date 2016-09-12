@@ -39,7 +39,12 @@ function connect() {
   })
   .then(server => server.getPrimaryService(parseInt("0xBABA")))
   .then(service => service.getCharacteristic(parseInt("0xAAAA")))
-    .then(characteristic => {
+  .then(characteristic => {
+    colorCharacteristic = characteristic;
+    // Notification start
+    /*return characteristic.startNotifications().then(_ => {
+      characteristic.addEventListener('characteristicvaluechanged', callback);
+    });*/
     let decoder = new TextDecoder('utf-8');
     return characteristic.readValue().then(value => {
       console.log("characteristic value :", value);
