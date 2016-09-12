@@ -1,6 +1,39 @@
 var bluetoothDevice;
 var colorCharacteristic;
 
+// Static values
+var buf = new ArrayBuffer(16);
+var bufView = new Uint16Array(buf);
+
+var byte0 = 0xff, // Static header
+    byte1 = 0x55, // Static header
+    byte2 = 0x09, // len
+    byte3 = 0x00, // idx
+    byte4 = 0x02, // action
+    byte5 = 0x0a, // device
+    byte6 = 0x09, // port
+    byte7 = 0x64; // slot
+//dynamics values
+var byte8 = 0x00, // data
+    byte9 = 0x00, // data
+    byte10 = 0x00, // data
+    byte11 = 0x00; // data
+//End of message
+var byte12 = 0x0a,
+    byte13 = 0x00,
+    byte14 = 0x00,
+    byte15 = 0x00;
+
+// Gestion de l'inversion par paire des bytes
+bufView[0] = byte1 << 8 | byte0;
+bufView[1] = byte3 << 8 | byte2;
+bufView[2] = byte5 << 8 | byte4;
+bufView[3] = byte7 << 8 | byte6;
+bufView[4] = byte9 << 8 | byte8;
+bufView[5] = byte11 << 8 | byte10;
+bufView[6] = byte13 << 8 | byte12;
+bufView[7] = byte15 << 8 | byte14;
+
 function onTouchEnd() {
   console.log("touchend");
 }
@@ -15,7 +48,7 @@ function connect() {
     filters: [{
       name: 'LEO'
     }],
-    "optionalServices": ["0000baba-0000-1000-8000-00805f9b34fb"]
+    "optionalServices": [parseInt("0xBABA")]
   })
   .then(device => {
     console.log("try connect");
@@ -23,10 +56,11 @@ function connect() {
     device.addEventListener('gattserverdisconnected', onDisconnected);
     return device.gatt.connect();
   })
-  .then(server => server.getPrimaryService("0000baba-0000-1000-8000-00805f9b34fb"))
-  .then(service => service.getCharacteristic("0000aaaa-0000-1000-8000-00805f9b34fb"))
+  .then(server => server.getPrimaryService(parseInt("0xBABA")))
+  .then(service => service.getCharacteristic(parseInt("0xAAAA")))
   .then(characteristic => {
     let decoder = new TextDecoder('utf-8');
+    console.log("characteristic value :", value);
 	  return characteristic.readValue().then(value => {
 	    console.log("characteristic value :", decoder.decode(value));
 	  });
@@ -34,7 +68,7 @@ function connect() {
     // Writing 1 is the signal to reset energy expended.
     //var newColor = new Uint8Array([1]);
     //return characteristic.writeValue(newColor);
-  }).then(_ => {document.getElementById("connectBtn").onClick="disconnect()";})
+  }).then(_ => {document.getElementById("connectBtn").click=function(){disconnect()};})
   /*.then(_ => {
     console.log('Energy expended has been reset.');
   })*/
@@ -50,7 +84,7 @@ function disconnect() {
   if (bluetoothDevice.gatt.connected) {
     console.log('Deconnexion');
     bluetoothDevice.gatt.disconnect();
-    document.getElementById("connectBtn").onClick="connect()";
+    document.getElementById("connectBtn").click=function(){connect()};
   } else {
     console.log('Bluetooth Device is already disconnected');
   }
