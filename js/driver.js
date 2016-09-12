@@ -29,12 +29,12 @@ function connect() {
     let decoder = new TextDecoder('utf-8');
 	  return characteristic.readValue().then(value => {
 	    console.log("characteristic value :", decoder.decode(value));
-	});
+	  });
 
     // Writing 1 is the signal to reset energy expended.
     //var newColor = new Uint8Array([1]);
     //return characteristic.writeValue(newColor);
-  })
+  }).then(_ => {document.getElementById("connectBtn").onClick="disconnect()";})
   /*.then(_ => {
     console.log('Energy expended has been reset.');
   })*/
@@ -49,6 +49,7 @@ function disconnect() {
   console.log('Deconnexion');
   if (bluetoothDevice.gatt.connected) {
     bluetoothDevice.gatt.disconnect();
+    document.getElementById("connectBtn").onClick="connect()";
   } else {
     console.log('Bluetooth Device is already disconnected');
   }
@@ -88,15 +89,15 @@ function sendColor() {
   .then(service => service.getCharacteristic(parseInt("0xaaaa")))
   .then(characteristic => {
     let decoder = new TextDecoder('utf-8');
-	colorCharacteristic = characteristic;
-	return characteristic.readValue().then(value => {
-	  console.log("characteristic value :", decoder.decode(value));
-	});
+	  colorCharacteristic = characteristic;
+	  return characteristic.readValue().then(value => {
+	    console.log("characteristic value :", decoder.decode(value));
+	  });
 
     // Writing 1 is the signal to reset energy expended.
     //var newColor = new Uint8Array([1]);
     //return characteristic.writeValue(newColor);
-  })
+  }).then(_ => {document.getElementById("connectBtn");})
   /*.then(_ => {
     console.log('Energy expended has been reset.');
   })*/
