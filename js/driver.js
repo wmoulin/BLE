@@ -22,13 +22,12 @@ function connect() {
 	bluetoothDevice = device;
     device.addEventListener('gattserverdisconnected', onDisconnected);
     device.gatt.connect();})
-  .then(server => { console.log("connect"); })
   .then(server => server.getPrimaryService(parseInt("0xBABA")))
-  .then(service => service.getCharacteristic(parseInt("0xaaaa")))
+  .then(service => service.getCharacteristic(parseInt("0xAAAA")))
   .then(characteristic => {
     let decoder = new TextDecoder('utf-8');
-	return characteristic.readValue().then(value => {
-	  console.log("characteristic value :", decoder.decode(value));
+	  return characteristic.readValue().then(value => {
+	    console.log("characteristic value :", decoder.decode(value));
 	});
 
     // Writing 1 is the signal to reset energy expended.
