@@ -1,3 +1,6 @@
+var bluetoothDevice;
+var colorCharacteristic;
+
 function onTouchEnd() {
   console.log("touchend");
 }
@@ -16,6 +19,7 @@ function connect() {
   })
   .then(device => {
     console.log("try connect");
+	bluetoothDevice = device;
     device.addEventListener('gattserverdisconnected', onDisconnected);
     device.gatt.connect();})
   .then(server => { console.log("connect"); })
@@ -52,6 +56,8 @@ function disconnect() {
 
 function onDisconnected(event) {
   let device = event.target;
+  bluetoothDevice = undefined;
+  colorCharacteristic = undefined;
   console.log('Device ' + device.name + ' is disconnected.');
 }
 
@@ -82,6 +88,7 @@ function sendColor() {
   .then(service => service.getCharacteristic(parseInt("0xaaaa")))
   .then(characteristic => {
     let decoder = new TextDecoder('utf-8');
+	colorCharacteristic = characteristic;
 	return characteristic.readValue().then(value => {
 	  console.log("characteristic value :", decoder.decode(value));
 	});
@@ -95,4 +102,32 @@ function sendColor() {
   })*/
   .catch(error => { console.log(error); });
 
+}
+
+function initServiceColor() {
+  console.log("connexion");
+  isDeviceinit();
+  device.gatt.connect();
+  .then(server => server.getPrimaryService(parseInt("0xBABA")))
+  .then(service => service.getCharacteristic(parseInt("0xaaaa")))
+  .then(characteristic => {
+    colorCharacteristic = characteristic;
+  })
+  .catch(error => { console.log(error); });
+
+}
+
+
+function readColor() {
+  let decoder = new TextDecoder('utf-8');
+  return characteristic.readValue().then(value => {
+	console.log("characteristic value :", decoder.decode(value));
+  }).catch(error => { console.log(error); });
+
+}
+
+function isDeviceinit() {
+  if (!bluetoothDevice) {
+    throw new Error("Bluetooth device not initialize !");
+  }
 }
