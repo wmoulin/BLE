@@ -4,7 +4,16 @@ var colorCharacteristic;
 // Static values
 
 
-var byteTest= [0xBA, // Static header
+var bytesWithHeader = [
+	0xBA, // Static header
+    0xBA, // Static header
+    0xAA, // Static header
+    0xAA // Static header
+]; // Blue
+
+var cUpdateColor = 0x03
+
+var byteColor = [0xBA, // Static header
     0xBA, // Static header
     0x03, // len
     0xFF, // Red
@@ -94,7 +103,7 @@ function hexValue(value) {
 }
 
 function sendColor() {
-  colorCharacteristic.writeValue(inverseByte(byteTest))
+  colorCharacteristic.writeValue(dataToSend(bytesWithHeader, cUpdateColor? [document.getElementById("red").value, hexValue(document.getElementById("green").value, hexValue(document.getElementById("blue").value]))
   .then( () => {
     console.log('New color send.');
   })
@@ -130,12 +139,21 @@ function isDeviceinit() {
   }
 }
 
-function inverseByte(byteArray) {
-  var buf = new ArrayBuffer(byteArray.length);
+function dataToSend(headerBytes, commandByte, byteValue) {
+  var buf = new ArrayBuffer(headerBytes.length + 1 + byteValue.length);
   var bufView = new Uint8Array(buf);
+  var idx = 0;
   // Gestion de l'inversion par paire des bytes
-  for (let i = 0; i < byteArray.length; i+=1) {
-    bufView[i] = byteArray[i];
+  
+  for (let i = 0; i < headerBytes.length; i+=1) {
+    bufView[idx++] = headerBytes[i];
+  }
+  
+  bufView[idx++] = commandByte;
+
+  // Gestion de l'inversion par paire des bytes
+  for (let i = 0; i < byteValue.length; i+=1) {
+    bufView[idx++] = byteArray[i];
   }
   return buf;
 }
