@@ -132,10 +132,10 @@ function isDeviceinit() {
 
 function inverseByte(byteArray) {
   var buf = new ArrayBuffer(byteArray.length);
-  var bufView = new Uint16Array(buf);
+  var bufView = new Uint8Array(buf);
   // Gestion de l'inversion par paire des bytes
-  for (let i = 0; i < byteArray.length; i+=2) {
-    bufView[0] = byteArray[i+1] << 8 | byteArray[i];
+  for (let i = 0; i < byteArray.length; i+=1) {
+    bufView[i] = byteArray[i];
   }
   return buf;
 }
