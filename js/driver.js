@@ -7,9 +7,9 @@ var colorCharacteristic;
 var byteTest= [0xBA, // Static header
     0xBA, // Static header
     0x03, // len
-    0x00, // Red
-    0x00, // Green
-    0x00]; // Blue
+    0xFF, // Red
+    0xFF, // Green
+    0xFF]; // Blue
 
 
 
