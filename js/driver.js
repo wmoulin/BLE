@@ -93,9 +93,15 @@ function onDisconnected(event) {
 }
 
 function colorChange(value) {
-  var newColor = hexValue(document.getElementById("red").value) + hexValue(document.getElementById("green").value) + hexValue(document.getElementById("blue").value);
+  led hexRedColor = hexValue(document.getElementById("red").value);
+  var hexGreenColor = hexValue(document.getElementById("green").value);
+  var hexBlueColor = hexValue(document.getElementById("blue").value);
+  var newColor = hexRedColor + hexGreenColor + hexBlueColor;
   console.log('newColor :', newColor);
   document.getElementById("apercu").style.backgroundColor = "#" + newColor;
+  document.getElementById("redValue").value = "0x" + hexRedColor;
+  document.getElementById("greenValue").value = "0x" + hexGreenColor;
+  document.getElementById("blueValue").value = "0x" + hexBlueColor;
 }
 
 function hexValue(value) {
