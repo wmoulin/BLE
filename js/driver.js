@@ -103,7 +103,7 @@ function hexValue(value) {
 }
 
 function sendColor() {
-  colorCharacteristic.writeValue(dataToSend(bytesWithHeader, cUpdateColor? [document.getElementById("red").value, hexValue(document.getElementById("green").value, hexValue(document.getElementById("blue").value]))
+  colorCharacteristic.writeValue(dataToSend(bytesWithHeader, cUpdateColor? [document.getElementById("red").value, document.getElementById("green").value, document.getElementById("blue").value]))
   .then( () => {
     console.log('New color send.');
   })
