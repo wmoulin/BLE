@@ -99,9 +99,9 @@ function colorChange(value) {
   let newColor = hexRedColor + hexGreenColor + hexBlueColor;
   console.log('newColor :', newColor);
   document.getElementById("apercu").style.backgroundColor = "#" + newColor;
-  document.getElementById("redValue").value = "0x" + hexRedColor;
-  document.getElementById("greenValue").value = "0x" + hexGreenColor;
-  document.getElementById("blueValue").value = "0x" + hexBlueColor;
+  document.getElementById("redValue").innerText = "0x" + hexRedColor;
+  document.getElementById("greenValue").innerText = "0x" + hexGreenColor;
+  document.getElementById("blueValue").innerText = "0x" + hexBlueColor;
 }
 
 function hexValue(value) {
