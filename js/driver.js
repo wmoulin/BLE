@@ -153,7 +153,7 @@ function dataToSend(headerBytes, commandByte, byteValue) {
 
   // Gestion de l'inversion par paire des bytes
   for (let i = 0; i < byteValue.length; i+=1) {
-    bufView[idx++] = byteArray[i];
+    bufView[idx++] = byteValue[i];
   }
   return buf;
 }
