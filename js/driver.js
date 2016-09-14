@@ -39,7 +39,7 @@ function connect() {
   })
   .then(server => {
 	  document.getElementById("connectBtn").style.backgroundColor = "#0687E6";
-	  server.getPrimaryService(parseInt("0xBABA"))
+	  return server.getPrimaryService(parseInt("0xBABA"))
   })
   .then(service => service.getCharacteristic(parseInt("0xAAAA")))
   .then(characteristic => {
