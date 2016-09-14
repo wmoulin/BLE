@@ -13,15 +13,6 @@ var bytesWithHeader = [
 
 var cUpdateColor = 0x03
 
-var byteColor = [0xBA, // Static header
-    0xBA, // Static header
-    0x03, // len
-    0xFF, // Red
-    0xFF, // Green
-    0xFF]; // Blue
-
-
-
 // Gestion de l'inversion par paire des bytes
 
 function onTouchEnd() {
@@ -47,7 +38,7 @@ function connect() {
     return device.gatt.connect();
   })
   .then(server => {
-	  document.getElementById("apercu").style.backgroundColor = "#0687E6";
+	  document.getElementById("connectBtn").style.backgroundColor = "#0687E6";
 	  server.getPrimaryService(parseInt("0xBABA"))
   })
   .then(service => service.getCharacteristic(parseInt("0xAAAA")))
@@ -82,7 +73,6 @@ function disconnect() {
     if(colorCharacteristic) colorCharacteristic.removeEventListener('characteristicvaluechanged', characteristicValueChanged);
     bluetoothDevice.gatt.disconnect();
     document.getElementById("connectBtn").onclick=function(){connect()};
-	document.getElementById("apercu").style.backgroundColor = "red";
     //});
   } else {
     console.log('Bluetooth Device is already disconnected');
@@ -93,6 +83,7 @@ function onDisconnected(event) {
   let device = event.target;
   bluetoothDevice = undefined;
   colorCharacteristic = undefined;
+  document.getElementById("connectBtn").style.backgroundColor = "red";
   console.log('Device ' + device.name + ' is disconnected.');
 }
 
@@ -171,3 +162,11 @@ function dataToSend(headerBytes, commandByte, byteValue) {
 function characteristicValueChanged(e) {
   console.log("characteristicvaluechanged :", characteristicvaluechanged);
 };
+
+
+class Command{
+	constructor(code) {
+		this.code = code;
+		this.headerBytes = [0xBA, 0xBA, 0xAA, 0xAA ];
+	}
+}
