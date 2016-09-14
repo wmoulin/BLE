@@ -19,7 +19,7 @@
   width: 33%;
 }
 
-.center {
+#connectBtn {
   border-radius:50px;
   background-color: red;
 }

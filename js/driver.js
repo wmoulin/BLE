@@ -72,7 +72,6 @@ function disconnect() {
     //colorCharacteristic.stopNotifications().then(_ => {colorCharacteristic
     if(colorCharacteristic) colorCharacteristic.removeEventListener('characteristicvaluechanged', characteristicValueChanged);
     bluetoothDevice.gatt.disconnect();
-    document.getElementById("connectBtn").onclick=function(){connect()};
     //});
   } else {
     console.log('Bluetooth Device is already disconnected');
@@ -84,6 +83,7 @@ function onDisconnected(event) {
   bluetoothDevice = undefined;
   colorCharacteristic = undefined;
   document.getElementById("connectBtn").style.backgroundColor = "red";
+  document.getElementById("connectBtn").onclick=function(){connect()};
   console.log('Device ' + device.name + ' is disconnected.');
 }
 
