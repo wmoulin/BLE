@@ -29,7 +29,7 @@ function connect() {
     filters: [{
       name: 'LEO'
     }],
-    "optionalServices": [parseInt("0xBABA")]
+    "optionalServices": ["0000baba-0000-1000-8000-00805f9b34fb"]
   })
   .then(device => {
     console.log("try connect");
@@ -39,9 +39,9 @@ function connect() {
   })
   .then(server => {
 	  document.getElementById("connectBtn").style.backgroundColor = "#0687E6";
-	  return server.getPrimaryService(parseInt("0xBABA"))
+	  return server.getPrimaryService("0000baba-0000-1000-8000-00805f9b34fb")
   })
-  .then(service => service.getCharacteristic(parseInt("0xAAAA")))
+  .then(service => service.getCharacteristic("0000aaaa-0000-1000-8000-00805f9b34fb"))
   .then(characteristic => {
     colorCharacteristic = characteristic;
     // Notification start
