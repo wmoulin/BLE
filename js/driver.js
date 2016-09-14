@@ -46,7 +46,10 @@ function connect() {
     device.addEventListener('gattserverdisconnected', onDisconnected);
     return device.gatt.connect();
   })
-  .then(server => server.getPrimaryService(parseInt("0xBABA")))
+  .then(server => {
+	  document.getElementById("apercu").style.backgroundColor = "#0687E6";
+	  server.getPrimaryService(parseInt("0xBABA"))
+  })
   .then(service => service.getCharacteristic(parseInt("0xAAAA")))
   .then(characteristic => {
     colorCharacteristic = characteristic;
@@ -76,9 +79,10 @@ function disconnect() {
   if (bluetoothDevice.gatt.connected) {
     console.log('Deconnexion');
     //colorCharacteristic.stopNotifications().then(_ => {colorCharacteristic
-       if(colorCharacteristic) colorCharacteristic.removeEventListener('characteristicvaluechanged', characteristicValueChanged);
-      bluetoothDevice.gatt.disconnect();
-      document.getElementById("connectBtn").onclick=function(){connect()};
+    if(colorCharacteristic) colorCharacteristic.removeEventListener('characteristicvaluechanged', characteristicValueChanged);
+    bluetoothDevice.gatt.disconnect();
+    document.getElementById("connectBtn").onclick=function(){connect()};
+	document.getElementById("apercu").style.backgroundColor = "red";
     //});
   } else {
     console.log('Bluetooth Device is already disconnected');
