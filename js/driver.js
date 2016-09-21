@@ -27,9 +27,10 @@ function connect() {
   console.log("connexion");
   navigator.bluetooth.requestDevice({
     filters: [{
-      name: 'LEO'
-    }],
-    "optionalServices": ["0000baba-0000-1000-8000-00805f9b34fb"]
+      name: 'LEO',
+      services: ["0000ffe0-0000-1000-8000-00805f9b34fb"]
+    }]
+
   })
   .then(device => {
     console.log("try connect");
@@ -39,9 +40,9 @@ function connect() {
   })
   .then(server => {
 	  document.getElementById("connectBtn").style.backgroundColor = "#0687E6";
-	  return server.getPrimaryService("0000baba-0000-1000-8000-00805f9b34fb")
+	  return server.getPrimaryService("0000ffe0-0000-1000-8000-00805f9b34fb")
   })
-  .then(service => service.getCharacteristic("0000aaaa-0000-1000-8000-00805f9b34fb"))
+  .then(service => service.getCharacteristic("0000ffe1-0000-1000-8000-00805f9b34fb"))
   .then(characteristic => {
     colorCharacteristic = characteristic;
     // Notification start
@@ -145,11 +146,11 @@ function dataToSend(headerBytes, commandByte, byteValue) {
   var bufView = new Uint8Array(buf);
   var idx = 0;
   // Gestion de l'inversion par paire des bytes
-  
+
   for (let i = 0; i < headerBytes.length; i+=1) {
     bufView[idx++] = headerBytes[i];
   }
-  
+
   bufView[idx++] = commandByte;
 
   // Gestion de l'inversion par paire des bytes
@@ -163,10 +164,158 @@ function characteristicValueChanged(e) {
   console.log("characteristicvaluechanged :", characteristicvaluechanged);
 };
 
+class BluetoothDevice{
+
+	constructor(name) {
+		this.name = name;
+		this.services = {};
+		this.device = undefined;
+		this.server = undefined;
+	}
+
+	void addService(id, uuid) {
+		this.services[id] = new BluetoothService(uuid);
+	}
+
+	Promise getDevice() {
+
+		if (this.device) {
+			return Promise.resolve(this.device);
+		} else {
+
+			let filters = [{
+				name: this.name
+			}];
+
+			if (this.services && this.services.length > 0) {
+				filters[0].services = [];
+				Object.keys(this.services).forEach((key) => {
+		    	filters[0].services.push(this.services[key].uuid)
+				});
+			}
+
+			return navigator.bluetooth.requestDevice({filters})
+		  .then(device => {
+		    console.log("device trouve");
+			  this.device = device;
+		    device.addEventListener('gattserverdisconnected', this.onDisconnected);
+		    return device;
+		  })
+		}
+
+	}
+
+	Promise connect() {
+		if (this.server) {
+			return Promise.resolve(this.server);
+		} else {
+			return this.getDevice.then((device) => {
+				return device.gatt.connect();
+			}).then((server) => {
+				this.server = server;
+				return server;
+			});
+		}
+	}
+
+	Promise getService(id) {
+		if (!this.services[id]) {
+			console.error("Service id unknowned :" + id);
+		}
+
+		if (this.services[id].service) {
+			return Promise.resolve(this.services[id].service);
+		} else {
+			return this.connect().then(server => {
+			  return server.getPrimaryService(this.services[id].uuid)
+		  })
+			.then((service) => {
+				this.services[id].service = service;
+				return service;
+			});
+		}
+	}
+
+	void onDisconnected() {
+		this.server = undefined;
+		this.services = {};
+	  console.log('Device ' + device.name + ' is disconnected.');
+	}
+
+	void disconnect() {
+	  if (!this.device) {
+	    return;
+	  }
+
+	  if (this.device.gatt.connected) {
+	    console.log('Disconnect');
+	    //TODO if(colorCharacteristic) colorCharacteristic.removeEventListener('characteristicvaluechanged', characteristicValueChanged);
+	    this.device.gatt.disconnect();
+	    //});
+	  } else {
+	    console.log('Bluetooth Device is already disconnected');
+	  }
+	}
+}
+
+class BluetoothService {
+	constructor(uuid) {
+		this.uuid = name;
+		this.characteristics = {};
+		this.service = undefined;
+	}
+
+	void addCharacteristic(uuid) {
+		this.characteristics[id] = new BluetoothCharacteristic(uuid);
+	}
+
+
+	Promise getCharacteristic(id) {
+		if (!this.characteristics[id]) {
+			console.error("Characteristic id unknowned :" + id);
+		}
+
+		if (this.characteristics[id].characteristic) {
+			return Promise.resolve(this.characteristics[id].characteristic);
+		} else {
+			return service.getCharacteristic(this.characteristics[id].uuid)
+			.then((characteristic) => {
+				this.characteristics[id].characteristic = characteristic;
+				return characteristic;
+			});
+		}
+	}
+
+}
+
+class BluetoothCharacteristic{
+	constructor(uuid) {
+		this.uuid = uuid;
+	}
+}
 
 class Command{
 	constructor(code) {
-		this.code = code;
+		this.codeByte = code;
 		this.headerBytes = [0xBA, 0xBA, 0xAA, 0xAA ];
+	}
+
+	ArrayBuffer dataToSend(byteValue) {
+	  var buf = new ArrayBuffer(this.headerBytes.length + 1 + byteValue.length);
+	  var bufView = new Uint8Array(buf);
+	  var idx = 0;
+	  // Gestion de l'inversion par paire des bytes
+
+	  for (let i = 0; i < this.headerBytes.length; i+=1) {
+	    bufView[idx++] = headerBytes[i];
+	  }
+
+	  bufView[idx++] = this.codeByte;
+
+	  // Gestion de l'inversion par paire des bytes
+	  for (let i = 0; i < byteValue.length; i+=1) {
+	    bufView[idx++] = byteValue[i];
+	  }
+	  return buf;
 	}
 }
