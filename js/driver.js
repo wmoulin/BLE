@@ -34,7 +34,7 @@ function connect() {
     filters: [{
       name: 'LEO'
     }],
-    "optionalServices": ["0000baba-0000-1000-8000-00805f9b34fb"]
+    "optionalServices": ["6e400001-b5a3-f393-e0a9-e50e24dcca9e"]
   })
   .then(device => {
     console.log("try connect");
@@ -44,9 +44,9 @@ function connect() {
   })
   .then(server => {
 	  document.getElementById("connectBtn").style.backgroundColor = "#0687E6";
-	  return server.getPrimaryService("0000baba-0000-1000-8000-00805f9b34fb")
+	  return server.getPrimaryService("6e400001-b5a3-f393-e0a9-e50e24dcca9e")
   })
-  .then(service => service.getCharacteristic("0000aaaa-0000-1000-8000-00805f9b34fb"))
+  .then(service => service.getCharacteristic("6e400002-b5a3-f393-e0a9-e50e24dcca9e"))
   .then(characteristic => {
     colorCharacteristic = characteristic;
     // Notification start
