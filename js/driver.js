@@ -1,3 +1,8 @@
+// ADR E1:D3:90:5B:F9:2C
+// Service UUID 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+// Characteristic Tx UUID 6e400003-b5a3-f393-e0a9-e50e24dcca9e (notify)
+// Characteristic Rx UUID 6e400002-b5a3-f393-e0a9-e50e24dcca9e (write)
+
 var bluetoothDevice;
 var colorCharacteristic;
 
@@ -145,11 +150,11 @@ function dataToSend(headerBytes, commandByte, byteValue) {
   var bufView = new Uint8Array(buf);
   var idx = 0;
   // Gestion de l'inversion par paire des bytes
-  
+
   for (let i = 0; i < headerBytes.length; i+=1) {
     bufView[idx++] = headerBytes[i];
   }
-  
+
   bufView[idx++] = commandByte;
 
   // Gestion de l'inversion par paire des bytes
