@@ -51,7 +51,7 @@ function connect() {
   .then((service) => {
 		console.log("service ok");
 		console.log("try get characteristic");
-		service.getCharacteristic("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
+		return service.getCharacteristic("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
 	})
   .then((characteristic) => {
 		console.log("characteristic ok : " + characteristic);
