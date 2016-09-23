@@ -54,7 +54,7 @@ function connect() {
 		service.getCharacteristic("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
 	})
   .then(characteristic => {
-		onsole.log("characteristic ok");
+		console.log("characteristic ok");
 		console.log("try get characteristic value");
     colorCharacteristic = characteristic;
     // Notification start
