@@ -43,11 +43,19 @@ function connect() {
     return device.gatt.connect();
   })
   .then(server => {
+		console.log("connect ok");
+		console.log("try get service");
 	  document.getElementById("connectBtn").style.backgroundColor = "#0687E6";
 	  return server.getPrimaryService("6e400001-b5a3-f393-e0a9-e50e24dcca9e")
   })
-  .then(service => service.getCharacteristic("6e400002-b5a3-f393-e0a9-e50e24dcca9e"))
+  .then((service) => {
+		console.log("service ok");
+		console.log("try get characteristic");
+		service.getCharacteristic("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
+	})
   .then(characteristic => {
+		onsole.log("characteristic ok");
+		console.log("try get characteristic value");
     colorCharacteristic = characteristic;
     // Notification start
     /*return characteristic.startNotifications().then(_ => {
