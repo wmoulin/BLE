@@ -17,6 +17,7 @@ var bytesWithHeader = [
 ]; // Blue
 
 var cUpdateColor = 0x03
+var cDirection = 0x03
 
 // Gestion de l'inversion par paire des bytes
 
@@ -26,6 +27,16 @@ function onTouchEnd() {
 
 function onTouchStart() {
   console.log("touchstart");
+}
+
+
+function sendDirection(direction) {
+  colorCharacteristic.writeValue(dataToSend(bytesWithHeader, cDirection, [direction]))
+  .then( () => {
+    console.log('New direction.');
+  })
+  .catch(error => { console.log(error); });
+
 }
 
 function connect() {
@@ -53,11 +64,12 @@ function connect() {
     /*return characteristic.startNotifications().then(_ => {
       characteristic.addEventListener('characteristicvaluechanged', characteristicValueChanged);
     });*/
-    let decoder = new TextDecoder('utf-8');
+    /*let decoder = new TextDecoder('utf-8');
     return characteristic.readValue().then(value => {
       console.log("characteristic value :", value);
 	    console.log("characteristic value :", decoder.decode(value));
-	  });
+	  });*/
+		return true;
 
     // Writing 1 is the signal to reset energy expended.
     //var newColor = new Uint8Array([1]);
