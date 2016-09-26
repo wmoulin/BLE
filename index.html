@@ -20,7 +20,7 @@
     </div>
   </div>
   <div class="rows">
-    <div id="left" class="cols" ontouchend="onTouchEnd()" ontouchstart="onTouchStart()">
+    <div id="left" class="cols" ontouchend="sendDirection(0)" ontouchstart="osendDirection(3)">
       <img />
     </div>
     <div id="connectBtn" class="cols" onclick="connect()">
@@ -28,7 +28,7 @@
 			<img/>
 		</div>
     </div>
-    <div id="right" class="cols" ontouchend="onTouchEnd()" ontouchstart="onTouchStart()">
+    <div id="right" class="cols" ontouchend="sendDirection(0)" ontouchstart="sendDirection(4)">
       <img />
     </div>
   </div>
@@ -36,7 +36,7 @@
     <div class="cols">
       &nbsp;
     </div>
-    <div id="down" class="cols">
+    <div id="down" class="cols" ontouchend="sendDirection(0)" ontouchstart="sendDirection(2">
       <img />
     </div>
     <div class="cols">
