@@ -16,8 +16,8 @@ var bytesWithHeader = [
     0xAA // Static header
 ]; // Blue
 
-var cUpdateColor = 0x03
-var cDirection = 0x03
+var cUpdateColor = 0x03;
+var cDirection = 0x02;
 
 // Gestion de l'inversion par paire des bytes
 
