@@ -1,9 +1,20 @@
 .driver {
+  display: flex;
+  flex-direction: row;
+  height: 300px;
+  width: 500px;
+  justify-content: space-between;
+}
+
+.direction {
   display: inline-flex;
   flex-direction: column;
   height: 300px;
   width: 300px;
+  max-height: 300px;
+  max-width: 300px;
   border: 1px solid;
+  flex: 1 66%;
 }
 
 .rows {
@@ -56,6 +67,26 @@
 	height: 100%;
 	width: 100%;
 	margin: auto;
+}
+
+
+.extra {
+  display: inline-flex;
+  flex-direction: column;;
+  height: 300px;
+  width: 100px;
+  max-width: 100px;
+  border: 1px solid;
+  flex: 1 33%;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.extra #tornado  img {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  content: url("../images/tornado.png");
 }
 
 .color {

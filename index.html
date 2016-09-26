@@ -8,39 +8,46 @@
 </head>
 <body>
 <div class="driver">
-  <div class="rows">
-    <div class="cols">
-      &nbsp;
+  <div class="direction">
+    <div class="rows">
+      <div class="cols">
+        &nbsp;
+      </div>
+      <div id="up" class="cols" ontouchend="sendDirection(0)" ontouchstart="sendDirection(1)">
+        <img/>
+      </div>
+      <div class="cols">
+        &nbsp;
+      </div>
     </div>
-    <div id="up" class="cols" ontouchend="sendDirection(0)" ontouchstart="sendDirection(1)">
-      <img/>
+    <div class="rows">
+      <div id="left" class="cols" ontouchend="sendDirection(0)" ontouchstart="sendDirection(3)">
+        <img />
+      </div>
+      <div id="connectBtn" class="cols" onclick="connect()">
+  		<div>
+  			<img/>
+  		</div>
+      </div>
+      <div id="right" class="cols" ontouchend="sendDirection(0)" ontouchstart="sendDirection(4)">
+        <img />
+      </div>
     </div>
-    <div class="cols">
-      &nbsp;
+    <div class="rows">
+      <div class="cols">
+        &nbsp;
+      </div>
+      <div id="down" class="cols" ontouchend="sendDirection(0)" ontouchstart="sendDirection(2)">
+        <img />
+      </div>
+      <div class="cols">
+        &nbsp;
+      </div>
     </div>
   </div>
-  <div class="rows">
-    <div id="left" class="cols" ontouchend="sendDirection(0)" ontouchstart="sendDirection(3)">
+  <div class="extra">
+    <div id="tornado" ontouchend="sendDirection(0)" ontouchstart="sendDirection(5)">
       <img />
-    </div>
-    <div id="connectBtn" class="cols" onclick="connect()">
-		<div>
-			<img/>
-		</div>
-    </div>
-    <div id="right" class="cols" ontouchend="sendDirection(0)" ontouchstart="sendDirection(4)">
-      <img />
-    </div>
-  </div>
-  <div class="rows">
-    <div class="cols">
-      &nbsp;
-    </div>
-    <div id="down" class="cols" ontouchend="sendDirection(0)" ontouchstart="sendDirection(2)">
-      <img />
-    </div>
-    <div class="cols">
-      &nbsp;
     </div>
   </div>
 </div>
